@@ -8,7 +8,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 import shop.mtcoding.bank.config.enums.UserEnum;
-import shop.mtcoding.bank.handler.LoginHandler;
+import shop.mtcoding.bank.handler.CustomLoginHandler;
 
 // SecurityConfigChain
 // 아파치 톰캣이 만들어둔 것인데 14개 정도를 다 타고 난 뒤 디스패치가 들어온다.
@@ -17,7 +17,7 @@ import shop.mtcoding.bank.handler.LoginHandler;
 public class SecurityConfig {
 
     @Autowired
-    private LoginHandler loginHandler;
+    private CustomLoginHandler customLoginHandler;
     // configration 파일에서는 생성자 주입(final) 을 절대 쓰지 않기
     // @Autowired 사용하기!! 외우자!
 
@@ -42,6 +42,7 @@ public class SecurityConfig {
                 // "ROLE_" 프리픽스 필요 // 묵시적 형변환
                 .anyRequest().permitAll()
                 .and()
+
                 .formLogin() // localhost:8080/login을 시큐리티가 쓰고 있는데 이제 그걸 안 쓰기 위해 사용
                 // formLogin의 디폴트는 x-www-from-urlencoded다.
                 // body는 'POST'
@@ -49,10 +50,10 @@ public class SecurityConfig {
                 .usernameParameter("username")
                 .passwordParameter("password")
                 .loginProcessingUrl("/api/login")
-                .defaultSuccessUrl("/") // login 성공시 갈 창
-                .failureForwardUrl("/error") // login 실패시 갈 창
-                .successHandler(loginHandler) // 잘 될 경우
-                .failureHandler(loginHandler); // 실패할 경우
+                // .defaultSuccessUrl("/") // login 성공시 갈 창
+                // .failureForwardUrl("/error") // login 실패시 갈 창
+                .successHandler(customLoginHandler) // 잘 될 경우
+                .failureHandler(customLoginHandler); // 실패할 경우
 
         return http.build();
         // 내 사이트에서 다른 사이트로 아이프레임할 경우

@@ -21,19 +21,17 @@ public class LoginUser implements UserDetails {
         Collection<GrantedAuthority> authorities = new ArrayList<>();
         authorities.add(() -> "ROLE_" + user.getRole()); // 람다식 사용 // 권한은 하나가 된다.
         // 권한을 여러개 주고 싶을 때는 String을 사용해서 콤마를 쓴다 (쓰진 않기)
-        return null;
+        return authorities;
     }
 
     @Override
     public String getPassword() {
-        user.getPassword();
-        return null;
+        return user.getPassword();
     }
 
     @Override
     public String getUsername() {
-        user.getUsername();
-        return null;
+        return user.getUsername();
     }
 
     @Override

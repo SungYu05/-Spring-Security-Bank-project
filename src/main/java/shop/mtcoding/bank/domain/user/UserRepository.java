@@ -12,7 +12,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     // 왜 프레임워크를 만들까? 많이 쓰면 무엇이 좋기 때문에?
     // 내가 생각한 답: 시간을 단축시키면 그만큼 효율적으로 일할 수 있기 때문에
 
-    @Query("select u from User u where username = :usernmae")
+    @Query("select u from User u where username = :username")
     Optional<User> findByUsername(@Param("username") String username);
 
 }
